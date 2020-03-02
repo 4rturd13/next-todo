@@ -12,8 +12,8 @@ const Todo = props => {
                 {props.todos.length > 0 ? (
                     props.todos.map(type => (
                         <tr key={type.id}>
-                            <td>{type.type}</td>
-                            <td>{type.todo}</td>
+                            <td className="item">{type.type}</td>
+                            <td className="item">{type.todo}</td>
                             <td>
                                 <button
                                     className="button muted-button"
@@ -40,6 +40,25 @@ const Todo = props => {
                     </tr>
                 )}
             </tbody>
+            <style jsx>{`
+                .item {
+                    padding: 0.5rem 1rem;
+                    border-radius: 1rem;
+                    background-color: white;
+                }
+
+                button {
+                    margin: 0.1rem 0.1rem;
+                    padding: 0.5rem 1rem;
+                    border: none;
+                    border-radius: 0.2rem;
+                    margin-left: 0.5rem;
+                    background-color: gray;
+                    color: #fff;
+                    font-weight: bold;
+                    font-size: 0.8rem;
+                }
+            `}</style>
         </table>
     );
 };

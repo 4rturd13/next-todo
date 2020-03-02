@@ -75,8 +75,9 @@ const Home = () => {
                     font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica",
                         "Arial", sans-serif;
                     padding: 20px 20px 60px;
-                    max-width: 680px;
+                    width: 680px;
                     margin: 0 auto;
+                    line-height: 1.15;
                     background-color: #ebebeb;
                 }
 
@@ -84,8 +85,6 @@ const Home = () => {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                }
-                .flex-row {
                 }
             `}</style>
         </div>
