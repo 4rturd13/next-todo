@@ -1,203 +1,77 @@
-import Head from 'next/head'
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import Todo from "../components/Todo";
+import AddTodo from "../components/AddTodo";
+import EditTodo from "../components/EditTodo";
 
-const Home = () => (
-  <div className="container">
-    <Head>
-      <title>Create Next App</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+const Home = () => {
+    const todoData = [
+        { id: 1, type: "Home", todo: "Rapair door" },
+        { id: 2, type: "Work", todo: "Send slides" },
+        { id: 3, type: "Market", todo: "Buy avocados" }
+    ];
 
-    <main>
-      <h1 className="title">
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
-      </h1>
+    const [todos, setTodos] = useState(todoData);
 
-      <p className="description">
-        Get started by editing <code>pages/index.js</code>
-      </p>
+    const addTodo = todo => {
+        todo.id = uuidv4();
 
-      <div className="grid">
-        <a href="https://nextjs.org/docs" className="card">
-          <h3>Documentation &rarr;</h3>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+        setTodos([...todos, todo]);
+    };
 
-        <a href="https://nextjs.org/learn" className="card">
-          <h3>Learn &rarr;</h3>
-          <p>Learn about Next.js in an interactive course with quizzes!</p>
-        </a>
+    const deleteTodo = id => {
+        const filterTodo = todos.filter(todo => todo.id !== id);
 
-        <a
-          href="https://github.com/zeit/next.js/tree/master/examples"
-          className="card"
-        >
-          <h3>Examples &rarr;</h3>
-          <p>Discover and deploy boilerplate example Next.js projects.</p>
-        </a>
+        setTodos(filterTodo);
+    };
 
-        <a
-          href="https://zeit.co/new?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          className="card"
-        >
-          <h3>Deploy &rarr;</h3>
-          <p>
-            Instantly deploy your Next.js site to a public URL with ZEIT Now.
-          </p>
-        </a>
-      </div>
-    </main>
+    const [edit, setEdit] = useState(false);
 
-    <footer>
-      <a
-        href="https://zeit.co?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Powered by <img src="/zeit.svg" alt="ZEIT Logo" />
-      </a>
-    </footer>
+    const [currentTodo, setCurrentTodo] = useState({
+        id: null,
+        type: "",
+        todo: ""
+    });
 
-    <style jsx>{`
-      .container {
-        min-height: 100vh;
-        padding: 0 0.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
+    const editTodo = todo => {
+        setEdit(true);
 
-      main {
-        padding: 5rem 0;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
+        setCurrentTodo({
+            id: todo.id,
+            type: todo.type,
+            todo: todo.todo
+        });
+    };
 
-      footer {
-        width: 100%;
-        height: 100px;
-        border-top: 1px solid #eaeaea;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+    const updateTodo = (id, updateTodo) => {
+        setEdit(false);
+        setTodos(todos.map(todo => (todo.id === id ? updateTodo : todo)));
+    };
 
-      footer img {
-        margin-left: 0.5rem;
-      }
+    return (
+        <div className="container">
+            <h1>CRUD App with Hooks</h1>
+            <div className="flex-row">
+                <div className="flex-large">
+                    {edit ? (
+                        <>
+                            <h2>Edit Todo</h2>
+                            <EditTodo currentTodo={currentTodo} updateTodo={updateTodo} />
+                        </>
+                    ) : (
+                        <>
+                            <h2>Add TODO</h2>
+                            <AddTodo addTodo={addTodo} />
+                        </>
+                    )}
+                </div>
+                <div className="flex-large">
+                    <h2>View todos</h2>
+                    <Todo todos={todos} deleteTodo={deleteTodo} editTodo={editTodo} />
+                </div>
+            </div>
+        </div>
+    );
+};
 
-      footer a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .title a {
-        color: #0070f3;
-        text-decoration: none;
-      }
-
-      .title a:hover,
-      .title a:focus,
-      .title a:active {
-        text-decoration: underline;
-      }
-
-      .title {
-        margin: 0;
-        line-height: 1.15;
-        font-size: 4rem;
-      }
-
-      .title,
-      .description {
-        text-align: center;
-      }
-
-      .description {
-        line-height: 1.5;
-        font-size: 1.5rem;
-      }
-
-      code {
-        background: #fafafa;
-        border-radius: 5px;
-        padding: 0.75rem;
-        font-size: 1.1rem;
-        font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-          DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-      }
-
-      .grid {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-
-        max-width: 800px;
-        margin-top: 3rem;
-      }
-
-      .card {
-        margin: 1rem;
-        flex-basis: 45%;
-        padding: 1.5rem;
-        text-align: left;
-        color: inherit;
-        text-decoration: none;
-        border: 1px solid #eaeaea;
-        border-radius: 10px;
-        transition: color 0.15s ease, border-color 0.15s ease;
-      }
-
-      .card:hover,
-      .card:focus,
-      .card:active {
-        color: #0070f3;
-        border-color: #0070f3;
-      }
-
-      .card h3 {
-        margin: 0 0 1rem 0;
-        font-size: 1.5rem;
-      }
-
-      .card p {
-        margin: 0;
-        font-size: 1.25rem;
-        line-height: 1.5;
-      }
-
-      @media (max-width: 600px) {
-        .grid {
-          width: 100%;
-          flex-direction: column;
-        }
-      }
-    `}</style>
-
-    <style jsx global>{`
-      html,
-      body {
-        padding: 0;
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-          Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-    `}</style>
-  </div>
-)
-
-export default Home
+export default Home;
