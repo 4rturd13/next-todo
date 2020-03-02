@@ -4,7 +4,7 @@ const Todo = props => {
             <thead>
                 <tr>
                     <th>Type</th>
-                    <th>Todo</th>
+                    <th>To Do</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -36,7 +36,7 @@ const Todo = props => {
                     ))
                 ) : (
                     <tr>
-                        <td colSpan={3}>No todo avalible</td>
+                        <td colSpan={3}>No To Do avalible</td>
                     </tr>
                 )}
             </tbody>

@@ -50,26 +50,44 @@ const Home = () => {
 
     return (
         <div className="container">
-            <h1>CRUD App with Hooks</h1>
+            <h1>To Do App</h1>
             <div className="flex-row">
                 <div className="flex-large">
                     {edit ? (
                         <>
-                            <h2>Edit Todo</h2>
+                            <h2>Edit To Do</h2>
                             <EditTodo currentTodo={currentTodo} updateTodo={updateTodo} />
                         </>
                     ) : (
                         <>
-                            <h2>Add TODO</h2>
+                            <h2>Add To Do</h2>
                             <AddTodo addTodo={addTodo} />
                         </>
                     )}
                 </div>
                 <div className="flex-large">
-                    <h2>View todos</h2>
+                    <h2>View To Do's</h2>
                     <Todo todos={todos} deleteTodo={deleteTodo} editTodo={editTodo} />
                 </div>
             </div>
+            <style global jsx>{`
+                body {
+                    font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica",
+                        "Arial", sans-serif;
+                    padding: 20px 20px 60px;
+                    max-width: 680px;
+                    margin: 0 auto;
+                    background-color: #ebebeb;
+                }
+
+                .container {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+                .flex-row {
+                }
+            `}</style>
         </div>
     );
 };

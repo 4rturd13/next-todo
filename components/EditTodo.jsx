@@ -29,7 +29,7 @@ const EditTodo = props => {
             />
             <>{errors?.type?.message}</>
 
-            <label>Todo</label>
+            <label>To Do</label>
             <input
                 type="text"
                 name="todo"
@@ -39,7 +39,7 @@ const EditTodo = props => {
                 })}
             />
             <>{errors?.todo?.message}</>
-            <button>Edit Todo</button>
+            <button>Edit To Do</button>
         </form>
     );
 };
