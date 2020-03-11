@@ -1,17 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Todo from "../components/Todo";
 import AddTodo from "../components/AddTodo";
 import EditTodo from "../components/EditTodo";
 
 const Home = () => {
-    const todoData = [
-        { id: 1, type: "Home", todo: "Rapair door" },
-        { id: 2, type: "Work", todo: "Send slides" },
-        { id: 3, type: "Market", todo: "Buy avocados" }
-    ];
+    const todoData = [];
 
     const [todos, setTodos] = useState(todoData);
+
+    useEffect(() => {
+        if (todos.length > 0) {
+            localStorage.setItem("data", JSON.stringify(todos));
+        }
+    });
+
+    useEffect(() => {
+        let savedLocal = localStorage.getItem("data");
+        setTodos(JSON.parse(savedLocal));
+    }, []);
 
     const addTodo = todo => {
         todo.id = uuidv4();
@@ -56,7 +63,10 @@ const Home = () => {
                     {edit ? (
                         <>
                             <h2>Edit To Do</h2>
-                            <EditTodo currentTodo={currentTodo} updateTodo={updateTodo} />
+                            <EditTodo
+                                currentTodo={currentTodo}
+                                updateTodo={updateTodo}
+                            />
                         </>
                     ) : (
                         <>
@@ -67,15 +77,19 @@ const Home = () => {
                 </div>
                 <div className="flex-large">
                     <h2>View To Do's</h2>
-                    <Todo todos={todos} deleteTodo={deleteTodo} editTodo={editTodo} />
+                    <Todo
+                        todos={todos}
+                        deleteTodo={deleteTodo}
+                        editTodo={editTodo}
+                    />
                 </div>
             </div>
             <style global jsx>{`
                 body {
-                    font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica",
-                        "Arial", sans-serif;
+                    font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue",
+                        "Helvetica", "Arial", sans-serif;
                     padding: 20px 20px 60px;
-                    width: 680px;
+                    width: 100%;
                     margin: 0 auto;
                     line-height: 1.15;
                     background-color: #ebebeb;

@@ -31,6 +31,7 @@ const AddTodo = props => {
             />
             <>{errors?.todo?.message}</>
             <button>New To Do</button>
+
             <style jsx>{`
                 form {
                     display: flex;

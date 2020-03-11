@@ -1,3 +1,10 @@
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+
+const editIcon = <FontAwesomeIcon icon={faEdit} />;
+const deleteIcon = <FontAwesomeIcon icon={faTrash} />;
+
 const Todo = props => {
     return (
         <table>
@@ -16,20 +23,20 @@ const Todo = props => {
                             <td className="item">{type.todo}</td>
                             <td>
                                 <button
-                                    className="button muted-button"
+                                    className="button "
                                     onClick={() => {
                                         props.editTodo(type);
                                     }}
                                 >
-                                    Edit
+                                    {editIcon}
                                 </button>
                                 <button
-                                    className="button muted-button"
+                                    className="button delete"
                                     onClick={() => {
                                         props.deleteTodo(type.id);
                                     }}
                                 >
-                                    Delete
+                                    {deleteIcon}
                                 </button>
                             </td>
                         </tr>
@@ -44,19 +51,21 @@ const Todo = props => {
                 .item {
                     padding: 0.5rem 1rem;
                     border-radius: 1rem;
-                    background-color: white;
+                    background-color: #fff;
+                }
+                .delete {
+                    background-color: #ff5a5f;
                 }
 
                 button {
                     margin: 0.1rem 0.1rem;
-                    padding: 0.5rem 1rem;
+                    padding: 0.7rem auto;
                     border: none;
                     border-radius: 0.2rem;
                     margin-left: 0.5rem;
                     background-color: gray;
                     color: #fff;
-                    font-weight: bold;
-                    font-size: 0.8rem;
+                    font-size: 1rem;
                 }
             `}</style>
         </table>
